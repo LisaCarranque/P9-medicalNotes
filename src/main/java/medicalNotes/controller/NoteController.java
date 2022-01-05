@@ -26,6 +26,7 @@ public class NoteController {
 
     /**
      * This method is responsible for adding a note to patient historu
+     *
      * @param note the note to be added
      * @return the added note
      */
@@ -37,6 +38,7 @@ public class NoteController {
 
     /**
      * This method is responsible for getting note information for further update
+     *
      * @param id the id of the targeted note
      * @return the note to update
      */
@@ -48,6 +50,7 @@ public class NoteController {
 
     /**
      * This note is responsible for updating note information
+     *
      * @param note the note to udpate
      * @return the updated note
      */
@@ -59,6 +62,7 @@ public class NoteController {
 
     /**
      * This method is responsible for finding a note by patient uuid
+     *
      * @param uuid the uuid of the targeted patient
      * @return the list of notes for this patient
      */
@@ -70,6 +74,7 @@ public class NoteController {
 
     /**
      * This method is responsible for finding a note by id
+     *
      * @param id the id of the targeted note
      * @return the note targeted by id
      */

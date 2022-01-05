@@ -36,12 +36,6 @@ public class NoteControllerTest {
     }
 
     @Test
-    public void listNoteTest() {
-        noteController.listNote();
-        verify(noteService).findAll();
-    }
-
-    @Test
     public void updateNoteTest() {
         noteController.updateNoteInformation(any());
         verify(noteService).findNoteById(any());
@@ -49,13 +43,14 @@ public class NoteControllerTest {
 
     @Test
     public void validateNoteTest() {
-        noteController.validateUpdate(any());
-        verify(noteService).updateNote(any());
+        Note note = Note.builder().content("Dizziness").uuid(UUID.randomUUID()).id("1").build();
+        noteController.validateUpdate(note);
+        verify(noteService).updateNote(note);
     }
 
     @Test
     public void addNoteTest() {
-        Note note = Note.builder().id("1").build();
+        Note note = Note.builder().content("Dizziness").uuid(UUID.randomUUID()).id("1").build();
         noteController.addNote(note);
         verify(noteService).addNote(note);
     }
@@ -68,7 +63,7 @@ public class NoteControllerTest {
     }
 
     @Test
-    public void findByIdTest() {
+    public void findNoteByIdTest() {
         noteController.findNoteById("1");
         verify(noteService).findNoteById("1");
     }
