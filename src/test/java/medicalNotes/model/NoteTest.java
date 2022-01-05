@@ -22,30 +22,25 @@ public class NoteTest {
     @Test
     public void testGetAndSetNote() {
         UUID uuid = UUID.randomUUID();
-        Note note = Note.builder().build();
-        note.setContent("content");
+        Note note = Note.builder().content("Body Weight").uuid(UUID.randomUUID()).build();
+        note.setContent("Body Height");
         note.setUuid(uuid);
         note.setId("1");
         assertNotNull(note);
         assertEquals(uuid, note.getUuid());
-        assertEquals("content", note.getContent());
+        assertEquals("Body Height", note.getContent());
         assertEquals("1", note.getId());
     }
 
     @Test
     public void testBuildNote() {
         UUID uuid = UUID.randomUUID();
-        Note note = Note.builder().id("1").content("content").uuid(uuid).build();
+        Note note = Note.builder().id("1").content("Body Weight").uuid(uuid).build();
         assertNotNull(note);
         assertEquals("1", note.getId());
-        assertEquals("content", note.getContent());
+        assertEquals("Body Weight", note.getContent());
         assertEquals(uuid, note.getUuid());
     }
 
-    @Test
-    public void testNoArgumentConstructorPatient() {
-        Note note = Note.builder().build();
-        assertNotNull(note);
-    }
 
 }

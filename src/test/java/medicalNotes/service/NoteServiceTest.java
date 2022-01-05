@@ -31,25 +31,18 @@ public class NoteServiceTest {
     }
 
     @Test
-    public void findAllTest() {
-        noteService.findAll();
-        verify(noteRepository).findAll();
-    }
-
-    @Test
     public void addNoteTest() {
-        Note note = Note.builder().id("1").build();
+        Note note = Note.builder().content("Body Height").uuid(UUID.randomUUID()).id("1").build();
         noteService.addNote(note);
         verify(noteRepository).save(note);
     }
 
     @Test
     public void updateNoteTest() {
-        Note note = Note.builder().id("1").build();
+        Note note = Note.builder().content("Cholesterol").uuid(UUID.randomUUID()).id("1").build();
         noteService.updateNote(note);
         verify(noteRepository).save(note);
     }
-
 
     @Test
     public void getNoteById() {
