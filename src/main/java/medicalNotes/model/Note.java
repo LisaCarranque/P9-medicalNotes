@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 /**
@@ -27,6 +28,7 @@ public class Note {
     @Field("content")
     @NotEmpty
     @NonNull
+    @Size(min=1)
     String content;
     @Field("uuid")
     UUID uuid;
