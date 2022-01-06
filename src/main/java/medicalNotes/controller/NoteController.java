@@ -1,6 +1,7 @@
 package medicalNotes.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import medicalNotes.exception.NoteNotFoundException;
 import medicalNotes.model.Note;
 import medicalNotes.service.INoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,9 @@ public class NoteController {
     @RequestMapping("/patientHistory/update/{id}")
     public Note updateNoteInformation(@PathVariable String id) {
         log.info("medicalNotes controller: finding note with id: " + id);
-        return noteService.findNoteById(id).orElse(null);
+        Note note = noteService.findNoteById(id).orElse(null);
+        if (note == null) throw new NoteNotFoundException("Note not found for id: " + id);
+        return note;
     }
 
     /**
@@ -72,16 +75,5 @@ public class NoteController {
         return noteService.findAllPatientNotes(UUID.fromString(uuid));
     }
 
-    /**
-     * This method is responsible for finding a note by id
-     *
-     * @param id the id of the targeted note
-     * @return the note targeted by id
-     */
-    @RequestMapping("/patientHistory/findNoteById/{id}")
-    public Optional<Note> findNoteById(@PathVariable String id) {
-        log.info("medicalNotes controller: finding note by id: " + id);
-        return noteService.findNoteById(id);
-    }
 
 }
