@@ -42,9 +42,7 @@ dependencies {
     compile 'org.springframework.cloud:spring-cloud-starter-openfeign:2.0.0.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.6.1'
     implementation 'org.mongodb:mongo-java-driver:3.12.10'
-    // https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
-    // https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
     testImplementation 'org.mockito:mockito-junit-jupiter:2.23.4'
