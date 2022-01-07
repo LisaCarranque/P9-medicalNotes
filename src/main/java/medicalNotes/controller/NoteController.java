@@ -1,14 +1,12 @@
 package medicalNotes.controller;
 
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import medicalNotes.exception.NoteNotFoundException;
 import medicalNotes.model.Note;
 import medicalNotes.service.INoteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -20,6 +18,7 @@ import java.util.UUID;
  */
 @Slf4j
 @RestController
+@Api("Rest API for Note endpoints")
 public class NoteController {
 
     @Autowired
@@ -31,7 +30,7 @@ public class NoteController {
      * @param note the note to be added
      * @return the added note
      */
-    @RequestMapping("/patientHistory/add")
+    @PostMapping("/patientHistory/add")
     public Note addNote(@RequestBody @Valid Note note) {
         log.info("medicalNotes controller: adding note with uuid: " + note.getUuid());
         return noteService.addNote(note);
@@ -43,7 +42,7 @@ public class NoteController {
      * @param id the id of the targeted note
      * @return the note to update
      */
-    @RequestMapping("/patientHistory/update/{id}")
+    @GetMapping("/patientHistory/update/{id}")
     public Note updateNoteInformation(@PathVariable String id) {
         log.info("medicalNotes controller: finding note with id: " + id);
         Note note = noteService.findNoteById(id).orElse(null);
@@ -57,7 +56,7 @@ public class NoteController {
      * @param note the note to udpate
      * @return the updated note
      */
-    @RequestMapping("/patientHistory/update")
+    @PostMapping("/patientHistory/update")
     public Note validateUpdate(@RequestBody @Valid Note note) {
         log.info("medicalNotes controller: updating note with id: " + note.getId());
         return noteService.updateNote(note);
@@ -69,7 +68,7 @@ public class NoteController {
      * @param uuid the uuid of the targeted patient
      * @return the list of notes for this patient
      */
-    @RequestMapping("/patientHistory/findNotesByUuid/{uuid}")
+    @GetMapping("/patientHistory/findNotesByUuid/{uuid}")
     public List<Note> findNotesByUuid(@PathVariable String uuid) {
         log.info("medicalNotes controller: finding notes for patient with uuid: " + uuid);
         return noteService.findAllPatientNotes(UUID.fromString(uuid));
