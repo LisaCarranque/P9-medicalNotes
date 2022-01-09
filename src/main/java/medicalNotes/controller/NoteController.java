@@ -6,10 +6,14 @@ import medicalNotes.exception.NoteNotFoundException;
 import medicalNotes.model.Note;
 import medicalNotes.service.INoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,9 +35,18 @@ public class NoteController {
      * @return the added note
      */
     @PostMapping("/patientHistory/add")
-    public Note addNote(@RequestBody @Valid Note note) {
+    public ResponseEntity<Note> addNote(@RequestBody @Valid Note note) {
         log.info("medicalNotes controller: adding note with uuid: " + note.getUuid());
-        return noteService.addNote(note);
+        Note noteAdded = noteService.addNote(note);
+        if (Objects.isNull(noteAdded)) {
+            return ResponseEntity.noContent().build();
+        }
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(noteAdded.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
     }
 
     /**
