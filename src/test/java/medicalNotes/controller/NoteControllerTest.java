@@ -1,5 +1,6 @@
 package medicalNotes.controller;
 
+import medicalNotes.exception.NoteNotFoundException;
 import medicalNotes.model.Note;
 import medicalNotes.service.NoteService;
 import org.junit.jupiter.api.Test;
@@ -12,8 +13,10 @@ import org.springframework.ui.Model;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * This class is responsible for testing NoteController
@@ -36,26 +39,28 @@ public class NoteControllerTest {
     }
 
     @Test
-    public void listNoteTest() {
-        noteController.listNote();
-        verify(noteService).findAll();
-    }
-
-    @Test
     public void updateNoteTest() {
+        when(noteService.findNoteById(any())).thenReturn(java.util.Optional.ofNullable(Note.builder().id("1").uuid(UUID.randomUUID()).content("Dizziness").build()));
         noteController.updateNoteInformation(any());
         verify(noteService).findNoteById(any());
     }
 
     @Test
+    public void updateNoteThrowsExceptionTest() {
+        assertThrows(NoteNotFoundException.class, () -> noteController.updateNoteInformation(any()));
+    }
+
+
+    @Test
     public void validateNoteTest() {
-        noteController.validateUpdate(any());
-        verify(noteService).updateNote(any());
+        Note note = Note.builder().content("Dizziness").uuid(UUID.randomUUID()).id("1").build();
+        noteController.validateUpdate(note);
+        verify(noteService).updateNote(note);
     }
 
     @Test
     public void addNoteTest() {
-        Note note = Note.builder().id("1").build();
+        Note note = Note.builder().content("Dizziness").uuid(UUID.randomUUID()).id("1").build();
         noteController.addNote(note);
         verify(noteService).addNote(note);
     }
@@ -67,9 +72,4 @@ public class NoteControllerTest {
         verify(noteService).findAllPatientNotes(uuid);
     }
 
-    @Test
-    public void findByIdTest() {
-        noteController.findNoteById("1");
-        verify(noteService).findNoteById("1");
-    }
 }

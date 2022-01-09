@@ -7,11 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * This class is the main class for medicalNotes microservice
  */
 @Slf4j
+@EnableSwagger2
 @SpringBootApplication
 @ComponentScan(basePackages = {"medicalNotes"})
 @EntityScan("medicalNotes")
